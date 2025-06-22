@@ -1,15 +1,27 @@
 // src/components/CartWidget.jsx
-import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { Button, Badge } from "react-bootstrap";
 
-function CartWidget() {
+function CartWidget({ cantidad = 3 }) {
   return (
-    <button type="button" className="btn btn-outline-light position-relative">
+    <Button
+      variant="outline-light"
+      type="button"
+      className="position-relative"
+      title="Ver carrito"
+      aria-label="Ver carrito"
+    >
       <FaShoppingCart size={20} />
-      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        3 {/* valor estático */}
-      </span>
-    </button>
+      {cantidad > 0 && (
+        <Badge
+          bg="danger"
+          pill
+          className="position-absolute top-0 start-100 translate-middle"
+        >
+          {cantidad}
+        </Badge>
+      )}
+    </Button>
   );
 }
 

@@ -1,52 +1,45 @@
 // src/components/NavBar.jsx
-import React from "react";
+import { useState, useEffect } from "react";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import CartWidget from "./CartWidget";
 
+import { Link } from "react-router";
+
 function NavBar() {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch("https://dummyjson.com/products/categories")
+      .then((res) => res.json())
+      .then((res) => {
+        //console.log("Categorías desde la API:", res);
+        setCategories(res);
+      });
+  }, []);
+
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-dark bg-primary w-100"
-      style={{ width: "100%" }}
-    >
-      <div className="container-fluid justify-content-between px-4">
-        <a className="navbar-brand fw-bold" href="#">
-          Mi Tienda
-        </a>
-
-        <div className="d-flex align-items-center gap-3">
-          {/* Dropdown */}
-          <div className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle text-white"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-            >
-              Productos
-            </a>
-            <ul className="dropdown-menu dropdown-menu-end">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Celulares
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Notebooks
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Discos Duros
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <CartWidget />
-        </div>
-      </div>
-    </nav>
+    <Navbar bg="primary" variant="dark" expand="lg">
+      <Container fluid className="px-4">
+        <Navbar.Brand href="#">Mi Tienda</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav className="align-items-center gap-3">
+            <NavDropdown title="Categorias" id="categorias-dropdown">
+              {categories.map((cat) => (
+                <NavDropdown.Item
+                  as={Link}
+                  key={cat.slug}
+                  to={`/category/${cat.slug}`}
+                >
+                  {cat.name}
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
+            <CartWidget />
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
