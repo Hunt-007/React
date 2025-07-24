@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-//import "./App.css"; No lo ocupamo de momento
 
 import NavBar from "./components/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
-//import Counter from "./components/Counter";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
 function App() {
   return (
@@ -16,12 +16,15 @@ function App() {
       <BrowserRouter>
         <NavBar />
         <Routes>
+          <Route path="/inicio" element={<ItemListContainer />} />
           <Route path="/" element={<ItemListContainer />} />
           <Route
             path="/category/:categoryName"
             element={<ItemListContainer />}
           />
           <Route path="/item/:id" element={<ItemDetailContainer />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </>
