@@ -8,7 +8,6 @@ function ItemDetailContainer() {
   const [item, setItem] = useState([]);
   const { id } = useParams();
 
-  //console.log(id);
   useEffect(() => {
     getItem(id).then((res) => setItem(res));
   }, [id]);
